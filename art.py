@@ -10,4 +10,5 @@ def draw(rows, columns):
 if __name__ == '__main__':
     if len(sys.argv) != 3:
         raise SystemExit("Usage: art.py rows columns")
+    print(sys.argv[0])
     draw(int(sys.argv[1]), int(sys.argv[2]))
