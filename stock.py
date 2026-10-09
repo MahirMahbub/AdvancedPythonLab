@@ -1,3 +1,4 @@
+# stock.py
 
 class Stock:
     __slots__ = ('name','_shares','_price')
@@ -6,6 +7,14 @@ class Stock:
         self.name = name
         self.shares = shares
         self.price = price
+
+    def __repr__(self):
+        # Note: The !r format code produces the repr() string
+        return f'{type(self).__name__}({self.name!r}, {self.shares!r}, {self.price!r})'
+
+    def __eq__(self, other):
+        return isinstance(other, Stock) and ((self.name, self.shares, self.price) ==
+                (other.name, other.shares, other.price))
 
     @classmethod
     def from_row(cls, row):
@@ -40,3 +49,12 @@ class Stock:
 
     def sell(self, nshares):
         self.shares -= nshares
+
+# Sample
+if __name__ == '__main__':
+    import reader
+    from tableformat import create_formatter, print_table
+
+    portfolio = reader.read_csv_as_instances('../../Data/portfolio.csv', Stock)
+    formatter = create_formatter('text')
+    print_table(portfolio,['name','shares','price'], formatter)
